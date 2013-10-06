@@ -1,0 +1,79 @@
+	
+	Author: Matei Razvan-Madalin, 313CA
+		    Facultatea de Automatica si Calculatoare
+		    
+	
+	
+			**************************************
+			***** Tema 2 - Metode Numerice *******
+			*** Factorizari. Valori. Cutremure ***
+			**************************************
+			
+			
+			
+		Task1 - Factorizare ortogonala
+		
+	Files: (1) gramSchmidtMod.m
+		   (2) solve.m
+		   (3) supTri.m
+		   
+	(1).... Algoritmul de factorizare QR Gram-Schmidt modificat.
+	(2).... Rezolvare sistem de ecuatii
+	(3).... Rezolvarea sistemelor superior triunghiulare
+	
+	
+	
+		Task2  - Valori si vectori proprii
+      
+     Algoritmul QR de aflare a vectorilor si valorilor proprii
+
+
+
+		Task3 - Valori proprii si cutemure
+		
+	File: (1) readFile.m
+		  (2) eigenValuesVectors.m
+		  (3) writeResults.m
+		  (4) myPlot.m
+		  
+	(1).... Citire valori din fisierul <filename>
+	(2).... Aflare vectori si valori proprii
+	(3).... Scriere rezultate in fisierul _fileName_
+	(4).... Grafic
+	
+	
+	
+		Task4 – Predictie liniara
+		
+	Files: (1) compress.m
+	       (2) decompress.m
+	       
+	COMPRESS:
+		Se formeaza 2 matrici firstMatrix si coefMatrix.
+		First Matrix este o matrice ce are pe coloane primele p
+	valori din segmentele de sunet (cate 160 de valori).
+		CoefMatrix este matrice ce are pe coloane p coeficienti
+	de predictie corespunzatori fiecarui segment de 20ms.
+	
+		Coeficientii nu au fost gasiti cu algoritmul Levinson-Durbin.
+		
+		Matricele au fost salvata intr-un fisier text de unde vor fi
+	preluate de functia decompress
+		
+	DECOMPRESS:
+		Odata preluate FirstMatrix si CoefMatrix se calculeaza noul
+	vector de valori sunet newY dupa formula:
+	
+	newY = zeros(c*r/2, 1);
+	for i = 1 : c
+		newY(n*(i-1)+1 : n*(i-1)+p) = firstMatrix(:, i);
+	
+		for j = n*(i-1)+p+1 : n*i
+			newY(j) = - (newY(j-1: -1 : j-p)' * coefMatrix(:, i));
+		endfor
+	endfor
+	
+	Detalii de implementare:
+		n a fost setat la valoarea 160 (20 ms) deoarece aceasta este de
+	regula frecventa cu care se succed silabele intr-un act de vorbire.
+               ̧

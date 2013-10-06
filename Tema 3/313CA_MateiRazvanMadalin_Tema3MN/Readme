@@ -1,0 +1,122 @@
+	
+	Autor : Matei Razvan Madalin, 313CA
+	
+	
+			************************************
+			***** Tema 3 - Metode numerice *****
+			*********** Interpolare ************
+			************************************
+			
+			
+			
+		Task 1.1 - Interpolarea cu funcții spline liniare
+		
+	fisier: SplineL.m
+	Detalii de implementare:
+	 	
+	* np a fost ales ca fiind egal cu 496 pentru a facilita
+	impartirea intervalului in 16 subintervale egale.
+	
+	* Cu ajutorul functiei interp1 vom calcula valorile de referinta.
+	
+	* Se calculeaza a si b dupa formulele:
+		a(i) = (y(i+1) - y(i)) / (x(i+1) - x(i));             i = 1:n-1
+		b(i) = (x(i+1)*y(i) - x(i)*y(i+1)) / (x(i+1) - x(i)); i = 1:n-1
+		
+	* S(x) este o functie definita local pe mai multe subintervale
+	de forma pi(x). Determinarea subintervalului se face prin a verifica
+	daca: if (np/(n-1))*(j-1)+1 <= i && i < (np/(n-1))*j. Initial j are
+	valoarea 1 si se incrementeaza cand nu mai este respectata conditia.
+	
+	* Se pun conditiile Hermite.
+	
+	* Se calculeaza eroarea dupa formula:
+		E = sqrt( (16/np) * sum((yi-S).^2) ); 16 = numar subintervale
+		
+	* Se face un grafic comparativ intre valorile de referinta si cele obtinute
+	
+	Observatii:
+		interp1 a fost apelata cu parametrul "linear"
+		nsi = 17;
+		Graficele se suprapun aproape perfect.
+		Intrucat este un spline liniar eroarea este foarte mica (E = 0.05)
+	 	
+	 	
+	 	
+	 		Task 1.2 - Interpolarea cu funcții spline cubice
+	 
+	 	1.2.1 Interpolarea cu functii spline cubice, naturale
+	 fisier: SplineN.m
+	 Detalii de implementare:
+	 
+	* np a fost ales ca fiind egal cu 496 pentru a facilita
+	impartirea intervalului in 16 subintervale egale.
+	
+	* Cu ajutorul functiei interp1 vom calcula valorile de referinta.
+	
+	* h(i) = x(i+1) - x(i)
+	  nsi = 17
+	  Diferenta este mereu egala cu 1.
+	  
+	* Se calculeaza a, b, c si d.
+	
+	* Cu acelasi artificiu de implementare ca la task 1.1 se calculeaza S;
+		S(i) = a(j) + b(j)*(xi(i) - x(j)) + c(j)*(xi(i) - x(j))^2 + d(j)*(xi(i) - x(j))^3;
+		
+	* Se calculeaza eroarea.
+	
+	* Se face un grafic comparativ intre valorile de referinta si cele obtinute.
+	
+		Observatii:
+			interp1 a fost apelata cu parametrul "spline"
+			Din conditiile puse pentru spline-uri naturale reiese:
+			c(1)   = 0;
+			c(n+1) = 0;
+	
+		1.2.2 Interpolarea cu functii spline cubice, tensionate
+	 fisier: SplineT.m
+	 Detalii de implementare:
+	 
+	* np a fost ales ca fiind egal cu 496 pentru a facilita
+	impartirea intervalului in 16 subintervale egale.
+	
+	* Cu ajutorul functiei interp1 vom calcula valorile de referinta.
+	
+	* h(i) = x(i+1) - x(i)
+	  nsi = 17
+	  Diferenta este mereu egala cu 1.
+	  
+	* Se calculeaza a, b, c si d.
+	
+	* Cu acelasi artificiu de implementare ca la task 1.1 se calculeaza S;
+		S(i) = a(j) + b(j)*(xi(i) - x(j)) + c(j)*(xi(i) - x(j))^2 + d(j)*(xi(i) - x(j))^3;
+		
+	* Se calculeaza eroarea.
+	
+	* Se face un grafic comparativ intre valorile de referinta si cele obtinute.
+	 
+		Observatii:
+			interp1 a fost apelata cu parametrul spline
+		 	Din conditiile puse pentru spline-uri tensionate reiese:
+		 	b(1) = (a(2) - a(1)) / h(1) - (h(1)/3)*(2*c(1) + c(2);
+	 	 
+	 	
+	 	
+		1.4.2 Identificarea locației
+		
+	fisier: Locatie.m
+	Detalii de implementare:
+	
+	* fiecare functie ce calculeaza spline-uri intoarce functia obtinuta.
+	* se apeleaza cele 3 functii si apoi se realizeaza graficul celor
+	4 functii suprapuse.
+	* Desenul seamana cu un munte.
+	
+	
+			Task 2 - Identificarea răpitorului
+			
+		Graficul se realizeaza cu ajutorul comenzii ezplot()
+		
+		NA NA NA NA NA NA NA NA BATMAN
+	 	
+	 	

@@ -1,0 +1,112 @@
+
+	Autor: Matei Razvan-Madalin 313CA
+		   UPB, Facultatea de Automatica si Calculatoare
+		   Anul 1, Sem 2
+		   
+		   
+		   
+			*************************************************
+			***********  Tema 4 - Metode Numerice ***********
+			**** Ecografie cardiaca. Integrare numerica *****
+			*************************************************
+		
+		
+		
+		___ Task 1: Puncte aleatoriu si uniform distribuite ___
+		
+	fisier: Gen2DPoints.m
+	
+		Descriere Algoritm:
+	Se cauta cel mai mare patrat perfect(np) mai mic
+	sau egal cu numarul de puncte. Radacina patrata
+	a acestuia reprezinta numarul de subintervale(nr_int) 
+	in care se impart cele 2 intervale date ca parametri.
+	Astfel, suprafata generata de [a, b] si [c, d] va fi
+	impartita in nr_int * nr_int suprafete egale. In fiecare
+	dintre aceste suprafete va fi plasat un punct aleator.
+	Diferenta de puncte de la N la np va fi plasata aleator
+	pe intreaga suprafata.
+	
+		Observatii:
+	Pentru a vedea graficul obtinut, decomentati cele 5 linii care
+	incep cu %%. Liniile au ramas comentate deoarece Gen2DPoints este
+	apelat in HeartModel si nu s-a dorit afisarea graficelor.
+	
+	
+		
+		___ Task 2: Aria unei suprafete inchise ___	
+		
+	* Task 2.1: Metoda Trapezelor
+	fisier: Trapez.m
+	
+		Descriere Algoritm:
+	Aceasta metoda presupune adunari si scaderi
+	succesive de arii de trapeze. Fiecare doua
+	puncte consecutive impreuna cu proiectiile
+	lor pe Ox reprezinta varfurile unui trapez.
+	Se aduna la aria finala aria trapezului daca 
+	x isi pastreaza monotonia si se scade daca 
+	si-o schimba. Aria finala, fiind pozitiva, 
+	este modulul ariei obtinute.
+	
+	* Task 2.2: Metoda Monte-Carlo
+	fisier: MonteCarlo.m
+	
+		Descriere Algortim:
+	Se incadreaza curba intr-un dreptunghi de forma
+	[xmin, xmax] x [ymin, ymax] si sa calculeaza aria 
+	acestuia (AD). Se genereaza in interiorul dreptunghiului
+	N puncte uniform distribuite cu functia Gen2DPoints.
+	Apoi se verifica cate dintre aceste puncte(Nint) sunt in interiorul
+	poligonului (vezi [1]). Se calculeaza acum aria curbei (A)
+	dupa formula: A = AD * Nint/N. Se repeta acesti pasi pana cand este
+	verificata conditia |A(2N) - A(N)| <= tol.
+	
+	[1] Verificare punct in poligon:
+	
+		Algoritm:
+	Pentru ca un punct sa fie in interiorul unui poligon trebuie ca
+	semidreapta paralela cu Ox ce pleaca din acel punct spre "dreapta"
+	sa intersecteze poligonul intr-un numar impar de puncte.
+	Conditia ca un punct sa intersecteze un segment AB la dreapta lui
+	este ca ordonata punctului sa se afle intre extremitatile segmentului
+	si abscisa sa fie mica decat minimul dintre abscisele extremitatilor.
+	
+		Implementare:
+	Se declara vectorul crossings format doar din zerouri de lungime N.
+	Urmatorii vectori sunt vectori de conditie: au valoarea 1 daca verifica 
+	conditia data si 0 daca nu o verifica.
+	
+	Vectorul in1 verifica daca ordonatele sunt mai mari decat extremitatea de jos.
+	Vectorul in2 verifica daca ordonatele sunt mai mici decat extremitatea de sus.
+	Vectorul in3 verifica daca abscisele sunt mai mici decat extremitatea din stanga.
+	Vectorul in reuneste cei 3 vectori (in = in1 & in2 & in3).
+	
+	Se aduna in la vectorul crossings. Astfel, dupa ce au fost parcurse 
+	toate laturile poligonului, crossings retine de cate ori un punct a 
+	verificat cele 3 conditii. Se face operatia modulo 2 asupra vectorului
+	crossings pentru a testa daca s-a facut intersectie de un numar impar de ori.
+	Numarul de puncte interioare curbei va fi egal numarul de valori de 1 din crossings.
+	
+		Observatii:
+	Cu algoritmul prezentat scot timpi mai buni decat cu functia inpolygon.
+	In conditiile in care este posibil, as dori o parere despre eficienta 
+	algoritmului.
+		
+ 
+ 	
+ 		___ Task 3: Volumul inimii ___
+ 		
+	 fisier: HeartModel.m
+	 
+	 	Descriere Algoritm:
+	 Volumul delimitat de doua suprafete consecutive
+	 este egal cu distanta dintre ele inmultita cu 
+	 media celor doua suprafete.
+	 Se retin intr-un vector ariile sectiunilor.
+	 Pentru fiecare doua arii consecutive se calculeaza
+	 volumul demilitat de acestea dupa formula de mai sus.
+	 Volumul final este suma acestor volume.
+	 
+	 
+	
